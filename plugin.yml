@@ -1,0 +1,30 @@
+name: Lottery
+main: io.github.feydk.lottery.LotteryPlugin
+description: Buy tickets in the lottery and maybe you'll win!
+depend: [ Vault ]
+version: 1.0
+commands:
+  lottery:
+    description: Use the lottery commands
+    permission: lottery.lottery
+    aliases: [lot, lotto]
+    usage: |-
+      /lottery - Display the main lottery interface
+      /lottery buy <amount> - Buy <amount> of tickets in the current draw
+      /lottery winners <page> - Display past winners
+      /lottery info - Display the "help" page
+  lotteryadmin:
+    description: Use the lottery admin commands
+    permission: lottery.admin
+    aliases: la
+    usage: |-
+      /lotteryadmin draw - Make the draw
+      /lotteryadmin redeem <player> <amount> - Buy back <amount> tickets from <player>
+      /lotteryadmin announce - Trigger the lottery status announcement
+permissions:
+  lottery.lottery:
+    description: Use /lottery
+    default: op
+  lottery.admin:
+    description: Use /lotteryadmin
+    default: op

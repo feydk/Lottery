@@ -1,0 +1,13 @@
+mysql:
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: lottery
+draw:
+  weekday: 6 # sunday is 0, saturday is 7
+  hours: 22
+  minutes: 0
+lottery:
+  price: 10 # price per ticket
+  transfer: 20 # this percentage of the pot will be transferred to the next draw
