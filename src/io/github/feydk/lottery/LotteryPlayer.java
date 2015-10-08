@@ -178,7 +178,11 @@ public class LotteryPlayer
 	
 	public static LotteryPlayer pickWinner(int drawId)
 	{
-		String sql = "select t.* from players t ";
+		// Do a little clean up first.
+		String sql = "delete from players where tickets = 0";
+		LotteryPlugin.db.execute(sql, null);
+		
+		sql = "select t.* from players t ";
 		sql += "inner join (select t.id, sum(tt.tickets) as cummulative_weight ";
 		sql += "from players t ";
 		sql += "inner join players tt on tt.id <= t.id ";

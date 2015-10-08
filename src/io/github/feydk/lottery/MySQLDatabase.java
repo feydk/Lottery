@@ -13,19 +13,21 @@ public class MySQLDatabase
 {
 	private Connection connection;
 	private boolean log_statements = false;
+	private String host;
+	private String port;
+	private String user;
+	private String password;
+	private String dbname;
 	
 	public MySQLDatabase(String host, String port, String user, String password, String dbname)
-	{				
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver");
-
-			this.connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + dbname, user, password);
-		}
-		catch(ClassNotFoundException | SQLException e)
-		{
-			e.printStackTrace();
-		}
+	{	
+		this.host = host;
+		this.port = port;
+		this.user = user;
+		this.password = password;
+		this.dbname = dbname;
+		
+		checkConnection();
 	}
 	
 	public void Close()
@@ -39,8 +41,34 @@ public class MySQLDatabase
 		{}
 	}
 	
+	private void checkConnection()
+	{
+		try
+		{
+			if(this.connection == null || !this.connection.isValid(5))
+			{
+				try
+				{
+					Class.forName("com.mysql.jdbc.Driver");
+
+					this.connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + dbname, user, password);
+				}
+				catch(ClassNotFoundException | SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public ResultSet select(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		PreparedStatement ps;
 		
 		try
@@ -75,6 +103,8 @@ public class MySQLDatabase
 	
 	public int getInt(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		ResultSet rs = select(query, params);
 		
 		try
@@ -94,6 +124,8 @@ public class MySQLDatabase
 	
 	public double getDouble(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		ResultSet rs = select(query, params);
 		
 		try
@@ -113,6 +145,8 @@ public class MySQLDatabase
 	
 	public int insert(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		PreparedStatement ps;
 		
 		try
@@ -156,6 +190,8 @@ public class MySQLDatabase
 	
 	public boolean update(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		PreparedStatement ps;
 		
 		try
@@ -192,6 +228,8 @@ public class MySQLDatabase
 	
 	public boolean execute(String query, HashMap<Integer, Object> params)
 	{
+		checkConnection();
+		
 		PreparedStatement ps;
 		
 		try
