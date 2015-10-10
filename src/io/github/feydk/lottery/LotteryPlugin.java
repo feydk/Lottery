@@ -21,17 +21,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class LotteryPlugin extends JavaPlugin implements Listener
 {		
 	private Economy economy;
-	private BukkitTask task;
-	private Draw currentDraw;
+	Draw currentDraw;
 	private List<LotteryPlayer> playersToBeNotified;
 	private boolean makingDraw;
 	static PluginConfig config;	
 	static MySQLDatabase db;
+	private LotteryScheduler scheduler;
 	
 	public LotteryPlugin()
 	{}
@@ -61,29 +60,8 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		
 		initDb();
 		
-		// Check if a draw is due.
-		if(currentDraw.getDrawDate().getTime() < new Date().getTime())
-		{
-			makeDraw();
-		}
-		else
-		{
-			// Set up a scheduled makeDraw().			
-			long drawTime = currentDraw.getDrawDate().getTime();
-			long now = new Date().getTime();
-			long diff = drawTime - now;
-			
-			int secs = (int)(diff / 1000);
-			long ticks = secs * 20;
-			
-			task = new BukkitRunnable()
-	    	{
-	    		@Override public void run()
-	    		{
-	    			makeDraw();
-	    		}
-	    	}.runTaskLater(this, ticks);
-		}
+		scheduler = new LotteryScheduler(this);
+		scheduler.start();
 	}
 	
 	@Override
@@ -544,9 +522,6 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 	
 	private void confirmForcedDraw(Player player)
 	{
-		if(task != null)
-			task.cancel();
-		
 		makeDraw();
 	}
 	
@@ -611,8 +586,11 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void makeDraw()
+	void makeDraw()
 	{
+		if(makingDraw)
+			return;
+		
 		makingDraw = true;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
@@ -689,22 +667,6 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 			
 			currentDraw = newDraw;
 		}
-		
-		// Set up a scheduled makeDraw().			
-		long drawTime = currentDraw.getDrawDate().getTime();
-		long now = new Date().getTime();
-		long diff = drawTime - now;
-		
-		int secs = (int)(diff / 1000);
-		long ticks = secs * 20;
-		
-		task = new BukkitRunnable()
-    	{
-    		@Override public void run()
-    		{
-    			makeDraw();
-    		}
-    	}.runTaskLater(this, ticks);
     	
     	makingDraw = false;
 	}
