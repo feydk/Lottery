@@ -374,8 +374,9 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		if(list.size() > 0)
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
-			int pages = list.get(0).getFoundRows() / 5;
-					
+			int total = list.get(0).getFoundRows();
+			int pages = (int)Math.ceil(total / 5);
+			
 			for(Draw draw : list)
 			{
 				json += "{text: \"§7[§b" + sdf.format(draw.getDrawDate()) + "§7] §f" + draw.getWinnerName() + " §3won §b" + economy.format(draw.getPot()) + "\n\"}, ";
