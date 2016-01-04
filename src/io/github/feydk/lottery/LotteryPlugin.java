@@ -375,7 +375,7 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
 			int total = list.get(0).getFoundRows();
-			int pages = (int)Math.ceil(total / 5);
+			int pages = (int)Math.ceil((double)total / 5.0);
 			
 			for(Draw draw : list)
 			{
