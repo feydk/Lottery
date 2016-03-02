@@ -254,10 +254,10 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 			
 			for(LotteryPlayer p : list)
 			{
-				json += "{text: \"§8[§6Lottery§8] §fYou won §b" + economy.format(p.getWonDrawPot()) + " §fin the draw of " + sdf.format(p.getWonDrawDate()) + "\n\"}, ";
+				json += "{\"text\": \"§8[§6Lottery§8] §fYou won §b" + economy.format(p.getWonDrawPot()) + " §fin the draw of " + sdf.format(p.getWonDrawDate()) + "\n\"}, ";
 			}
 			
-			json += "{text: \"\"} ";
+			json += "{\"text\": \"\"} ";
 			json += "] ";
 			
 			final String msg = json;
@@ -313,26 +313,26 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		next += mins + " " + (mins > 1 || mins == 0 ? "minutes" : "minute");
 		
 		String json = "[";		
-		json += "{text: \"§6§l§m   \"}, {text: \"§6 ✦ \"}, {text: \"§fWinthier Lottery\"}, {text: \"§6 ✦ §l§m   \n\"}, ";
-		json += "{text: \" §fThis is your chance to earn some extra dough. Buy tickets and you might win!\n \n\"}, ";
-		json += "{text: \" §3Time until next draw: §b" + next + "\n\"}, ";
-		json += "{text: \" §3Current pot size: §b" + economy.format(currentDraw.getPot()) + "\n \n\"}, ";
+		json += "{\"text\": \"§6§l§m   \"}, {\"text\": \"§6 ✦ \"}, {\"text\": \"§fWinthier Lottery\"}, {\"text\": \"§6 ✦ §l§m   \n\"}, ";
+		json += "{\"text\": \" §fThis is your chance to earn some extra dough. Buy tickets and you might win!\n \n\"}, ";
+		json += "{\"text\": \" §3Time until next draw: §b" + next + "\n\"}, ";
+		json += "{\"text\": \" §3Current pot size: §b" + economy.format(currentDraw.getPot()) + "\n \n\"}, ";
 		
 		if(p == null || p.getTickets() == 0)
 		{
-			json += "{text: \" §fYou haven't bought any tickets for this draw yet.\n\"}, ";
-			json += "{text: \" §7[§aBuy tickets§7]\", clickEvent: {action: \"suggest_command\", value: \"/lottery buy \" }, hoverEvent: {action: \"show_text\", value: \"§3/lottery buy\n§7Click, then enter an amount\n§7of tickets to buy.\"}}, ";
+			json += "{\"text\": \" §fYou haven't bought any tickets for this draw yet.\n\"}, ";
+			json += "{\"text\": \" §7[§aBuy tickets§7]\", \"clickEvent\": {\"action\": \"suggest_command\", \"value\": \"/lottery buy \" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"§3/lottery buy\n§7Click, then enter an amount\n§7of tickets to buy.\"}}, ";
 		}
 		else if(p != null && p.getTickets() > 0)
 		{
-			json += "{text: \" §fYou have §6" + p.getTickets() + " §f" + (p.getTickets() > 1 ? "tickets" : "ticket") + " for this draw. Good luck!\n\"}, ";
-			json += "{text: \" §7[§aBuy more tickets§7]\", clickEvent: {action: \"suggest_command\", value: \"/lottery buy \" }, hoverEvent: {action: \"show_text\", value: \"§3/lottery buy\n§7Click, then enter an amount\n§7of tickets to buy.\"}}, ";
+			json += "{\"text\": \" §fYou have §6" + p.getTickets() + " §f" + (p.getTickets() > 1 ? "tickets" : "ticket") + " for this draw. Good luck!\n\"}, ";
+			json += "{\"text\": \" §7[§aBuy more tickets§7]\", \"clickEvent\": {\"action\": \"suggest_command\", \"value\": \"/lottery buy \" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"§3/lottery buy\n§7Click, then enter an amount\n§7of tickets to buy.\"}}, ";
 		}
 		
-		json += "{text: \"\n \n\"}, ";
-		json += "{text: \" §7[§3More info§7]\", clickEvent: {action: \"run_command\", value: \"/lottery info\" }, hoverEvent: {action: \"show_text\", value: \"§3/lottery info\n§7Read how the lottery works.\"}}, ";
-		json += "{text: \" \"}, ";
-		json += "{text: \" §7[§3Past winners§7]\", clickEvent: {action: \"run_command\", value: \"/lottery winners\" }, hoverEvent: {action: \"show_text\", value: \"§3/lottery winners\n§7See past lottery winners.\"}} ";
+		json += "{\"text\": \"\n \n\"}, ";
+		json += "{\"text\": \" §7[§3More info§7]\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery info\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"§3/lottery info\n§7Read how the lottery works.\"}}, ";
+		json += "{\"text\": \" \"}, ";
+		json += "{\"text\": \" §7[§3Past winners§7]\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery winners\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"§3/lottery winners\n§7See past lottery winners.\"}} ";
 		json += "] ";
 		
 		sendJsonMessage(player, json);
@@ -343,10 +343,10 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		String[] days = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 		
 		String json = "[";
-		json += "{text: \"§6§l§m   \"}, {text: \"§6 ✦ \"}, {text: \"§fWinthier Lottery Info\"}, {text: \"§6 ✦ §l§m   \n\"}, ";
-		json += "{color: \"gray\", text: \" The lottery is a game of luck. You buy tickets at " + economy.format(config.TICKET_PRICE) + " per ticket and then hope one of your tickets will be drawn.\n If it does, you win the pot!\n \n\"}, ";
-		json += "{color: \"gray\", text: \" The pot size is determined by the amount of tickets sold. Every time a player buys a ticket, the pot grows.\n \n\"}, ";
-		json += "{color: \"gray\", text: \" The draw is made every " + days[config.DRAW_WEEKDAY] + " at " + String.format("%02d", config.DRAW_HOURS) + ":" + String.format("%02d", config.DRAW_MINUTES) + " server time.\"} ";
+		json += "{\"text\": \"§6§l§m   \"}, {\"text\": \"§6 ✦ \"}, {\"text\": \"§fWinthier Lottery Info\"}, {\"text\": \"§6 ✦ §l§m   \n\"}, ";
+		json += "{\"color\": \"gray\", \"text\": \" The lottery is a game of luck. You buy tickets at " + economy.format(config.TICKET_PRICE) + " per ticket and then hope one of your tickets will be drawn.\n If it does, you win the pot!\n \n\"}, ";
+		json += "{\"color\": \"gray\", \"text\": \" The pot size is determined by the amount of tickets sold. Every time a player buys a ticket, the pot grows.\n \n\"}, ";
+		json += "{\"color\": \"gray\", \"text\": \" The draw is made every " + days[config.DRAW_WEEKDAY] + " at " + String.format("%02d", config.DRAW_HOURS) + ":" + String.format("%02d", config.DRAW_MINUTES) + " server time.\"} ";
 		json += "] ";
 		
 		sendJsonMessage(player, json);
@@ -367,7 +367,7 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 	private void displayWinners(Player player, int page)
 	{
 		String json = "[";
-		json += "{text: \"§6§l§m   \"}, {text: \"§6 ✦ \"}, {text: \"§fWinthier Lottery Winners\"}, {text: \"§6 ✦ §l§m   \n\"}, ";
+		json += "{\"text\": \"§6§l§m   \"}, {\"text\": \"§6 ✦ \"}, {\"text\": \"§fWinthier Lottery Winners\"}, {\"text\": \"§6 ✦ §l§m   \n\"}, ";
 	
 		List<Draw> list = Draw.getHistory(page);
 		
@@ -379,22 +379,22 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 			
 			for(Draw draw : list)
 			{
-				json += "{text: \"§7[§b" + sdf.format(draw.getDrawDate()) + "§7] §f" + draw.getWinnerName() + " §3won §b" + economy.format(draw.getPot()) + "\n\"}, ";
+				json += "{\"text\": \"§7[§b" + sdf.format(draw.getDrawDate()) + "§7] §f" + draw.getWinnerName() + " §3won §b" + economy.format(draw.getPot()) + "\n\"}, ";
 			}
 			
 			if(pages > 1)
 			{
-				json += "{text: \"§3§l§m  §3 Page §b" + page + "§3/§b" + pages + " \"}, ";
+				json += "{\"text\": \"§3§l§m  §3 Page §b" + page + "§3/§b" + pages + " \"}, ";
 				
 				if(page + 1 <= pages)
-					json += "{text: \"§3[§bMore§3]\", clickEvent: {action: \"run_command\", value: \"/lottery winners " + (page + 1) + "\" }, hoverEvent: {action: \"show_text\", value: \"§7View more winners.\"}}, ";
+					json += "{\"text\": \"§3[§bMore§3]\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery winners " + (page + 1) + "\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"§7View more winners.\"}}, ";
 			}
 			
-			json += "{text: \"\"}";
+			json += "{\"text\": \"\"}";
 		}
 		else
 		{
-			json += "{text: \" §3There are no winners yet.\"}";
+			json += "{\"text\": \" §3There are no winners yet.\"}";
 		}
 				
 		json += "] ";
@@ -447,8 +447,8 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		p.update();
 		
 		String json = "[";
-		json += "{ text: \" §3Buy §b" + amount + "§3 " + (amount > 1 ? "tickets" : "ticket") + " for §b" +  economy.format(pay) + "§3?\"}, ";
-		json += "{ text: \" §3[§fConfirm§3]\", clickEvent: {action: \"run_command\", value: \"/lottery confirm " + amount + " " + p.getTransactionId() + "\" }, hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "Click to confirm.\"}} ";
+		json += "{ \"text\": \" §3Buy §b" + amount + "§3 " + (amount > 1 ? "tickets" : "ticket") + " for §b" +  economy.format(pay) + "§3?\"}, ";
+		json += "{ \"text\": \" §3[§fConfirm§3]\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery confirm " + amount + " " + p.getTransactionId() + "\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "Click to confirm.\"}} ";
 		json += "] ";
 		
 		sendJsonMessage(player, json);
@@ -514,8 +514,8 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 	private void forceDraw(Player player)
 	{
 		String json = "[";
-		json += "{color: \"green\", text: \" You're about to force a draw. Please confirm: \"}, ";
-		json += "{color: \"dark_green\", text: \"[Confirm draw]\", clickEvent: {action: \"run_command\", value: \"/lotteryadmin confirmdraw\" }, hoverEvent: {action: \"show_text\", value: \"" + ChatColor.GREEN + "Confirm this draw.\"}} ";
+		json += "{\"color\": \"green\", \"text\": \" You're about to force a draw. Please confirm: \"}, ";
+		json += "{\"color\": \"dark_green\", \"text\": \"[Confirm draw]\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lotteryadmin confirmdraw\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.GREEN + "Confirm this draw.\"}} ";
 		json += "] ";
 		
 		sendJsonMessage(player, json);
@@ -530,12 +530,12 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 	private void announce()
 	{
 		String json = "[";
-		json += "{text: \"§8[§6Lottery§8]\", hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "You can click the\n" + ChatColor.DARK_AQUA + "highlighted word\"}}, ";
-		json += "{color: \"white\", text: \" Current pot size is \"}, ";
-		json += "{color: \"gold\", text: \"" + economy.format(currentDraw.getPot()) + "\"}, ";
-		json += "{color: \"white\", text: \". \"}, ";
-		json += "{color: \"dark_aqua\", text: \"View details\", clickEvent: {action: \"run_command\", value: \"/lottery\" }, hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
-		json += "{color: \"white\", text: \".\"} ";
+		json += "{\"text\": \"§8[§6Lottery§8]\", \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "You can click the\n" + ChatColor.DARK_AQUA + "highlighted word\"}}, ";
+		json += "{\"color\": \"white\", \"text\": \" Current pot size is \"}, ";
+		json += "{\"color\": \"gold\", \"text\": \"" + economy.format(currentDraw.getPot()) + "\"}, ";
+		json += "{\"color\": \"white\", \"text\": \". \"}, ";
+		json += "{\"color\": \"dark_aqua\", \"text\": \"View details\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
+		json += "{\"color\": \"white\", \"text\": \".\"} ";
 		json += "] ";
 		
 		for(Player player : getServer().getOnlinePlayers())
@@ -609,11 +609,11 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 			currentDraw.update();
 			
 			String json = "[";
-			json += "{text: \"§8[§6Lottery§8]\", hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "You can click the\n" + ChatColor.DARK_AQUA + "highlighted word\"}}, ";
-			json += "{text: \" §fNo winner for this draw, since no tickets were bought!\n\"}, ";
-			json += "{text: \" §fThe next draw will be " + sdf.format(newDraw.getDrawDate()) + ". You can\"}, ";
-			json += "{text: \" §3buy tickets now\", clickEvent: {action: \"run_command\", value: \"/lottery\" }, hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
-			json += "{text: \"§f.\"} ";
+			json += "{\"text\": \"§8[§6Lottery§8]\", \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "You can click the\n" + ChatColor.DARK_AQUA + "highlighted word\"}}, ";
+			json += "{\"text\": \" §fNo winner for this draw, since no tickets were bought!\n\"}, ";
+			json += "{\"text\": \" §fThe next draw will be " + sdf.format(newDraw.getDrawDate()) + ". You can\"}, ";
+			json += "{\"text\": \" §3buy tickets now\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
+			json += "{\"text\": \"§f.\"} ";
 			json += "] ";
 			
 			// Notify everyone.
@@ -653,11 +653,11 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 			}
 			
 			String json = "[";
-			json += "{text: \"§8[§6Lottery§8]\"}, ";
-			json += "{text: \" §b" + winner.getName() + " §fwon the draw and the pot of §b" + economy.format(currentDraw.getPot()) + "§f.\n\"}, ";
-			json += "{text: \" §fThe next draw will be " + sdf.format(newDraw.getDrawDate()) + ". You can\"}, ";
-			json += "{text: \" §3buy tickets now\", clickEvent: {action: \"run_command\", value: \"/lottery\" }, hoverEvent: {action: \"show_text\", value: \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
-			json += "{text: \"§f.\"} ";
+			json += "{\"text\": \"§8[§6Lottery§8]\"}, ";
+			json += "{\"text\": \" §b" + winner.getName() + " §fwon the draw and the pot of §b" + economy.format(currentDraw.getPot()) + "§f.\n\"}, ";
+			json += "{\"text\": \" §fThe next draw will be " + sdf.format(newDraw.getDrawDate()) + ". You can\"}, ";
+			json += "{\"text\": \" §3buy tickets now\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/lottery\" }, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"" + ChatColor.DARK_AQUA + "/lottery\n" + ChatColor.GRAY + "Click to view\"}}, ";
+			json += "{\"text\": \"§f.\"} ";
 			json += "] ";
 			
 			// Notify everyone.
