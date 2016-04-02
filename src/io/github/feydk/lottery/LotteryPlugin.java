@@ -596,7 +596,7 @@ public class LotteryPlugin extends JavaPlugin implements Listener
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 		
-		LotteryPlayer winner = LotteryPlayer.pickWinner(currentDraw.getId());
+		LotteryPlayer winner = LotteryPlayer.pickWinnerNew(currentDraw.getId());
 		
 		// No tickets were bought for this draw, so transfer to next draw.
 		if(winner == null)

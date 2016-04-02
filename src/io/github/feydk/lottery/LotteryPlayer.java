@@ -3,6 +3,7 @@ package io.github.feydk.lottery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -176,7 +177,7 @@ public class LotteryPlayer
 		return null;
 	}
 	
-	public static LotteryPlayer pickWinner(int drawId)
+	public static LotteryPlayer pickWinnerOld(int drawId)
 	{
 		// Do a little clean up first.
 		String sql = "delete from players where tickets = 0";
@@ -203,6 +204,53 @@ public class LotteryPlayer
 		ResultSet rs = LotteryPlugin.db.select(sql, params);
 		
 		return LotteryPlayer.populate(rs);
+	}
+	
+	public static LotteryPlayer pickWinnerNew(int drawId)
+	{
+		// Do a little clean up first.
+		String sql = "delete from players where tickets = 0";
+		LotteryPlugin.db.execute(sql, null);
+		
+		sql = "select * from players where draw_id = ?";
+		
+		HashMap<Integer, Object> params = new HashMap<Integer, Object>();
+		params.put(1, drawId);
+		
+		ResultSet rs = LotteryPlugin.db.select(sql, params);
+		
+		List<Integer> tickets = new ArrayList<Integer>();
+		
+		try
+		{
+			if(rs != null && rs.isBeforeFirst())
+			{
+				while(!rs.isLast())
+				{
+					rs.next();
+					
+					int count = rs.getInt("tickets");
+					int player_id = rs.getInt("id");
+					
+					for(int i = 1; i <= count; i++)
+						tickets.add(player_id);
+				}
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(tickets.size() > 0)
+		{
+			// Shuffle the array. Now we can just pick the first entry, as that will be "random enough".
+			Collections.shuffle(tickets);
+			
+			return LotteryPlayer.getById(tickets.get(0));
+		}
+		
+		return null;
 	}
 	
 	public static LotteryPlayer get(Player player, int drawId)
